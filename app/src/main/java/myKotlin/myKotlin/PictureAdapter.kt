@@ -2,13 +2,12 @@ package myKotlin.myKotlin
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import myKotlin.myKotlin.databinding.CardBinding
-import myKotlin.myKotlin.ui.home.HomeFragmentDirections
+import myKotlin.myKotlin.ui.menuPager.MenuPagerFragmentDirections
 
-class PictureAdapter(private val pictures: List<Picture>, val fragment: Fragment) :
+class PictureAdapter(private val pictures: List<Picture>, private val nav: NavController) :
     RecyclerView.Adapter<PictureAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: CardBinding) : RecyclerView.ViewHolder(binding.root)
@@ -24,14 +23,11 @@ class PictureAdapter(private val pictures: List<Picture>, val fragment: Fragment
             text.text = pictures[position].text
             imageView.setImageResource(pictures[position].image)
             pictureCard.setOnClickListener {
-                val direction = HomeFragmentDirections.actionNavigationHomeToDetailFragment(
-                    Picture(
-                        pictures[position].image,
-                        pictures[position].title,
-                        pictures[position].text
+                nav.navigate(
+                    MenuPagerFragmentDirections.actionMenuPagerFragmentToDetailFragment(
+                        pictures[position]
                     )
                 )
-                fragment.findNavController().navigate(direction)
             }
         }
     }

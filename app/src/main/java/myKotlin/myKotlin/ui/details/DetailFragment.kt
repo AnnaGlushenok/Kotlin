@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import myKotlin.myKotlin.Picture
 import myKotlin.myKotlin.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -23,11 +22,9 @@ class DetailFragment : Fragment() {
         val detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val root = binding.root
-        val p: Picture = args.picture
+        binding.titleDetail.text = args.picture.title
+        binding.textDetail.text = args.picture.text
+        binding.imageView2.setImageResource(args.picture.image)
         return root
-    }
-
-    companion object {
-        fun newInstance() = DetailFragment()
     }
 }

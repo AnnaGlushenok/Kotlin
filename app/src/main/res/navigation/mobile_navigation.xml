@@ -3,33 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="myKotlin.myKotlin.ui.home.HomeFragment"
+        android:name="myKotlin.myKotlin.ui.mainTab.MainTabFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_main_tab">
         <action
-            android:id="@+id/action_navigation_home_to_detailFragment"
-            app:destination="@id/detailFragment"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_navigation_home_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="myKotlin.myKotlin.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpToInclusive="false" />
+    </fragment>
+
     <fragment
         android:id="@+id/detailFragment"
         android:name="myKotlin.myKotlin.ui.details.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="picture"
             app:argType="myKotlin.myKotlin.Picture" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuPagerFragment"
+        android:name="myKotlin.myKotlin.ui.menuPager.MenuPagerFragment"
+        android:label="fragment_menu_pager"
+        tools:layout="@layout/fragment_menu_pager" >
+        <action
+            android:id="@+id/action_menuPagerFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="myKotlin.myKotlin.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_menuPagerFragment"
+            app:destination="@id/menuPagerFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>

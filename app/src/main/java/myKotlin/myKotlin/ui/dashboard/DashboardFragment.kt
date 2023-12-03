@@ -12,9 +12,6 @@ import myKotlin.myKotlin.databinding.FragmentDashboardBinding
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,25 +19,21 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this)[DashboardViewModel::class.java]
+        val viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        fun newInstance() = DashboardFragment()
     }
 }
