@@ -1,13 +1,41 @@
 package myKotlin.myKotlin.ui.mainTab
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dal.dal.Models.FeaturedCollections
+import dal.dal.Models.Photos
+import dal.dal.Repositories.FeaturedCollectionsRepository
+import dal.dal.Repositories.PhotoRepository
+import kotlinx.coroutines.launch
 
-class MainTabViewModel : ViewModel() {
+class MainTabViewModel(
+    private val photoRepo: PhotoRepository,
+    private val collectionsRepo: FeaturedCollectionsRepository
+) : ViewModel() {
+    val photoLiveData: LiveData<Photos>
+        get() = photoRepo.photos
+    val collectionsLiveData: LiveData<FeaturedCollections>
+        get() = collectionsRepo.collections
+    private var page = 1
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    init {
+        viewModelScope.launch {
+            photoRepo.get()
+            collectionsRepo.get()
+        }
     }
-    val text: LiveData<String> = _text
+
+    fun getPhotos() {
+        viewModelScope.launch {
+            photoRepo.get(page)
+        }
+        page++
+    }
+
+    fun getPhotosByName(requestStr: String) {
+        viewModelScope.launch {
+            photoRepo.getByName(requestStr);
+        }
+    }
 }

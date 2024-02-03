@@ -1,13 +1,25 @@
 package myKotlin.myKotlin.ui.dashboard
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dal.dal.Models.Photo
+import dal.dal.Repositories.PhotoRepository
+import kotlinx.coroutines.launch
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(
+    private val photoRepo: PhotoRepository
+) : ViewModel() {
+    val photoLiveData: LiveData<List<Photo>>
+        get() = photoRepo.savedPhotos
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    init {
+        get()
     }
-    val text: LiveData<String> = _text
+
+    fun get() {
+        viewModelScope.launch {
+            photoRepo.getSavedPhotos()
+        }
+    }
 }

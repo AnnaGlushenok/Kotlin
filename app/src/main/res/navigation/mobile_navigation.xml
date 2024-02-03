@@ -32,8 +32,8 @@
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="picture"
-            app:argType="myKotlin.myKotlin.Picture" />
+            android:name="photo"
+            app:argType="dal.dal.Models.Photo" />
     </fragment>
     <fragment
         android:id="@+id/menuPagerFragment"
@@ -45,6 +45,9 @@
             app:destination="@id/detailFragment"
             app:enterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="photos"
+            app:argType="dal.dal.Models.Photos" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"

@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import myKotlin.myKotlin.MainActivity
+import myKotlin.myKotlin.PictureAdapter
 import myKotlin.myKotlin.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
-
+    private lateinit var viewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
@@ -19,15 +22,20 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            (activity as MainActivity).dashboardFactory
+        )[DashboardViewModel::class.java]
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        viewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val adapter = PictureAdapter(findNavController())
+        viewModel.photoLiveData.observe(viewLifecycleOwner) {
+            adapter.differ.submitList(it)
         }
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.adapter = adapter
 
         return root
     }

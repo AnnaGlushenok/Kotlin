@@ -4,17 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500"
     tools:context=".ui.splash.SplashFragment">
 
-    <TextView
-        android:id="@+id/splash_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="Картинки!!!!!!!!"
-        android:textColor="@color/white"
-        android:textSize="25sp"
+    <ImageView
+        android:id="@+id/splash_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:animation="@anim/rotate_animation"
+        android:src="@mipmap/kotlin_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
